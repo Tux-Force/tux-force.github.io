@@ -1,0 +1,28 @@
+---
+title: Compatibility
+description: Which games run with Tux-Force, tested by the community.
+---
+
+import CompatTable from '../../components/CompatTable.astro';
+
+Every game uses the GDK services differently, so each one needs testing. This list shows what has been tested with
+the current [releases](/downloads/). Nothing is hidden: games that do not work are listed too.
+
+<CompatTable />
+
+| State | Meaning |
+|---|---|
+| Plays | Can be played from start to finish, including saves and online features |
+| Issues | Playable with problems that are described in the notes |
+| Does not work | Does not start or cannot be played |
+| Untested | No report yet |
+
+## Report a game
+
+Tested a game? Open an [issue in xTux](https://github.com/Tux-Force/xTux/issues/new) with the game, whether it
+plays, your distribution, GPU and driver, and what did or did not work. Remove tokens and personal data from logs.
+
+Community reports per game, without needing an account anywhere but GitHub, are on the
+[roadmap](/project/roadmap/). This list is the start of it; it lives in
+[`src/data/compatibility.json`](https://github.com/Tux-Force/tux-force.github.io/blob/develop/src/data/compatibility.json),
+and pull requests to it are welcome.

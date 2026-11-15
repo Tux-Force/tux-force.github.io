@@ -1,0 +1,120 @@
+/* Tux-Force brand colours (see /project/brand/) mapped onto Starlight's theme variables. */
+
+:root {
+	--tf-night: #06140f;
+	--tf-forest: #0f3b2e;
+	--tf-lime: #a3e635;
+	--tf-emerald: #10b981;
+	--tf-ice: #f4f7fb;
+	--tf-mist: #8fb5a3;
+	--sl-font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	--sl-font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+}
+
+/* Dark theme: night background, lime accent. */
+:root,
+::backdrop {
+	--sl-color-accent-low: #1d3a12;
+	--sl-color-accent: var(--tf-lime);
+	--sl-color-accent-high: #d9f99d;
+	--sl-color-white: var(--tf-ice);
+	--sl-color-gray-1: #e2ece7;
+	--sl-color-gray-2: #c3d6cc;
+	--sl-color-gray-3: var(--tf-mist);
+	--sl-color-gray-4: #4f6f61;
+	--sl-color-gray-5: #24443a;
+	--sl-color-gray-6: #0f2a21;
+	--sl-color-black: var(--tf-night);
+}
+
+/* Light theme: ice background, forest and emerald accents. */
+:root[data-theme='light'],
+[data-theme='light'] ::backdrop {
+	--sl-color-accent-low: #d1fae5;
+	--sl-color-accent: #047857;
+	--sl-color-accent-high: var(--tf-forest);
+	--sl-color-white: var(--tf-night);
+	--sl-color-gray-1: #11281f;
+	--sl-color-gray-2: #24443a;
+	--sl-color-gray-3: #4f6f61;
+	--sl-color-gray-4: #7d9a8c;
+	--sl-color-gray-5: #c3d6cc;
+	--sl-color-gray-6: #e6efea;
+	--sl-color-gray-7: #f1f6f3;
+	--sl-color-black: #fbfdfc;
+}
+
+/* Landing page */
+.hero img {
+	image-rendering: pixelated;
+	border-radius: 22%;
+	box-shadow: 0 0 80px color-mix(in srgb, var(--tf-lime) 25%, transparent);
+}
+
+[data-theme='light'] .hero img {
+	box-shadow: 0 0 60px color-mix(in srgb, var(--tf-emerald) 25%, transparent);
+}
+
+/* Compatibility table */
+.compat-status {
+	display: inline-block;
+	padding: 0.1rem 0.6rem;
+	border-radius: 999px;
+	font-size: var(--sl-text-xs);
+	font-weight: 700;
+	white-space: nowrap;
+}
+.compat-status[data-status='plays'] {
+	background: color-mix(in srgb, var(--tf-emerald) 25%, transparent);
+	color: var(--sl-color-white);
+}
+.compat-status[data-status='issues'] {
+	background: color-mix(in srgb, #eab308 30%, transparent);
+	color: var(--sl-color-white);
+}
+.compat-status[data-status='fails'] {
+	background: color-mix(in srgb, #ef4444 30%, transparent);
+	color: var(--sl-color-white);
+}
+.compat-status[data-status='untested'] {
+	background: var(--sl-color-gray-5);
+	color: var(--sl-color-white);
+}
+
+/* Colour swatches on the brand page */
+.swatches {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+	gap: 0.75rem;
+}
+.swatch {
+	border: 1px solid var(--sl-color-gray-5);
+	border-radius: 0.75rem;
+	overflow: hidden;
+	font-size: var(--sl-text-sm);
+}
+.swatch > div {
+	height: 4rem;
+}
+.swatch > p {
+	margin: 0;
+	padding: 0.4rem 0.6rem;
+}
+.brand-tile {
+	padding: 1.5rem;
+	border-radius: 0.75rem;
+	border: 1px solid var(--sl-color-gray-5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.brand-tile.dark {
+	background: var(--tf-night);
+}
+.brand-tile.light {
+	background: var(--tf-ice);
+}
+.brand-tile img {
+	max-height: 7rem;
+	margin: 0;
+}

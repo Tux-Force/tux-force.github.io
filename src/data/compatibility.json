@@ -1,0 +1,14 @@
+[
+  {
+    "game": "Farming Simulator 25",
+    "status": "plays",
+    "tested": "2026-11",
+    "notes": "Menus, saves, ModHub, Xbox Live (achievements, presence, real-time) and clean exit. Runs from xTux installs and from Windows Xbox app installs."
+  },
+  {
+    "game": "Microsoft Flight Simulator 2024",
+    "status": "fails",
+    "tested": "2026-11",
+    "notes": "Signs in and reaches its services, shows a cloud save and an antivirus warning, then crashes while loading. Under investigation."
+  }
+]

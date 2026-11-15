@@ -1,0 +1,106 @@
+---
+title: Installation
+description: Install xTux, the Tux-Force Wine build and the launcher, from a release or from source.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Tux-Force consists of three parts you install once:
+
+| Part | What it is | Comes as |
+|---|---|---|
+| **xTux** | `xtux-cli` (command line), `xtux-service` (background service) and `xtux-launcher` (graphical launcher) | `xtux-<version>-linux-x86_64.tar.gz` |
+| **Tux-Force Wine** | Wine with the open source GDK runtime (`xgameruntime.dll`) and fixes for GDK games | `wine-tux-force-x86_64.tar.xz` |
+| **Graphics layers** | DXVK and vkd3d-proton (Direct3D on Vulkan) | downloaded by `xtux-cli prefix init` |
+
+A Flatpak with everything in it is planned (see the [launcher plan](/project/launcher-plan/)).
+
+## Requirements
+
+- 64-bit x86 Linux, a CPU with AES instructions (every CPU from about 2011 on).
+- A Vulkan capable GPU driver (Mesa or NVIDIA).
+- A Secret Service keychain for the sign-in tokens: GNOME Keyring or KWallet, which desktops usually run already.
+- For the sign-in window: WebKitGTK (`webkit2gtk-4.1`).
+
+<Tabs>
+<TabItem label="From a release">
+
+1. Download both archives from the [downloads page](/downloads/).
+2. Unpack xTux and put the three programs into one folder in your `PATH`; `xtux-cli` and `xtux-launcher` start
+   `xtux-service` from the same folder:
+
+   ```bash
+   tar -xzf xtux-*-linux-x86_64.tar.gz -C ~/.local/bin xtux-cli xtux-service xtux-launcher
+   ```
+
+3. Unpack Wine anywhere, for example into your home folder:
+
+   ```bash
+   tar -xJf wine-tux-force-x86_64.tar.xz -C ~
+   ~/wine-tux-force-x86_64/bin/wine --version
+   ```
+
+Each release has a `SHA256SUMS` or `.sha256` file to check the download.
+
+</TabItem>
+<TabItem label="From source">
+
+xTux is a Rust workspace (Rust 1.98 or newer):
+
+```bash
+git clone https://github.com/Tux-Force/xTux
+cd xTux
+cargo build --release --workspace
+# programs in target/release: xtux-cli, xtux-service, xtux-launcher
+```
+
+The launcher needs the development files of fontconfig, xkbcommon and Wayland; the sign-in window needs WebKitGTK.
+
+Wine with the runtime (64-bit only, as used for testing):
+
+```bash
+git clone https://github.com/Tux-Force/wine
+cd wine
+git submodule update --init dlls/xgameruntime
+./configure --enable-archs=x86_64 --without-opencl
+make -j$(nproc)
+# ./wine is the Wine binary to use
+```
+
+</TabItem>
+</Tabs>
+
+## Shell completion
+
+`xtux-cli` completes commands and, for `run`, the names of your installed games. Add one line to your shell's
+startup file:
+
+<Tabs>
+<TabItem label="zsh">
+
+```bash
+# ~/.zshrc
+source <(COMPLETE=zsh xtux-cli)
+```
+
+</TabItem>
+<TabItem label="bash">
+
+```bash
+# ~/.bashrc
+source <(COMPLETE=bash xtux-cli)
+```
+
+</TabItem>
+</Tabs>
+
+## Settings
+
+Settings shared by `xtux-cli` and the launcher live in `~/.config/xtux/settings.toml`:
+
+| Key | Meaning | Default |
+|---|---|---|
+| `library_dirs` | Folders that contain one folder per game | `~/.local/share/xtux/games` plus every `XboxGames` folder found on drives under `/mnt`, `/media` and `/run/media/$USER` |
+| `wine` | Wine binary used to start games | none, must be set (or passed to `run`) |
+| `prefix` | Wine prefix for games | `WINEPREFIX`, else `~/Games/xtux-prefix` |
+| `market` | Store market, for example `DE` | from the system language |

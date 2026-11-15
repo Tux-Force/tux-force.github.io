@@ -1,0 +1,60 @@
+---
+title: Quick start
+description: From download to the first game in a few commands.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+This page gets a game running with as few steps as possible. Each step has its own page with the details.
+
+**You need:** a 64-bit x86 Linux PC with a Vulkan GPU driver, a Microsoft account that owns the game or has a PC Game
+Pass subscription, and the game either installed by the Windows Xbox app on a partition Linux can read, or enough
+space to download it.
+
+<Steps>
+
+1. **Download** the latest [xTux release](/downloads/) (`xtux-cli`, `xtux-service`, `xtux-launcher`) and the
+   Tux-Force Wine build, and unpack both. Put the three xTux programs in the same folder, for example `~/.local/bin`.
+   Details: [Installation](/guide/installation/).
+
+2. **Sign in** once with your Microsoft account. A sign-in window opens:
+
+   ```bash
+   xtux-cli login
+   ```
+
+   On the very first start xTux registers your PC with Microsoft and may ask for your password once. The
+   [sign-in page](/guide/sign-in/) explains why.
+
+3. **Prepare a Wine prefix** with DXVK, vkd3d-proton and the Microsoft root certificates games expect:
+
+   ```bash
+   xtux-cli prefix init ~/wine-tux-force-x86_64/bin/wine --prefix ~/Games/xtux-prefix
+   ```
+
+   Details: [Wine prefix](/guide/prefix/).
+
+4. **Tell xTux where things are** in `~/.config/xtux/settings.toml`, so you do not have to repeat them:
+
+   ```toml
+   library_dirs = ["/home/you/.local/share/xtux/games", "/mnt/windows/XboxGames"]
+   wine = "/home/you/wine-tux-force-x86_64/bin/wine"
+   prefix = "/home/you/Games/xtux-prefix"
+   ```
+
+   The launcher's **Settings** page writes the same file.
+
+5. **Play.** List your games and start one by name (Tab completes the names):
+
+   ```bash
+   xtux-cli list
+   xtux-cli run "Farming Simulator 25 (PC)"
+   ```
+
+   Or open the **xTux Launcher** (`xtux-launcher`) and press **Play**. Details:
+   [Running games](/guide/running-games/) and [Launcher](/guide/launcher/).
+
+</Steps>
+
+Something does not work? See [Troubleshooting](/guide/troubleshooting/), and check the
+[compatibility list](/compatibility/) for the game.

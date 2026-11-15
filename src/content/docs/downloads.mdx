@@ -1,0 +1,34 @@
+---
+title: Downloads
+description: The latest releases of xTux, the xTux Launcher and the Tux-Force Wine build.
+---
+
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+Releases are built by GitHub Actions from the `main` branch of each repository. Every release lists its files and
+a checksum file to verify them.
+
+<CardGrid>
+	<LinkCard
+		title="xTux (CLI, service and launcher)"
+		description="xtux-<version>-linux-x86_64.tar.gz: xtux-cli, xtux-service and xtux-launcher for 64-bit x86 Linux."
+		href="https://github.com/Tux-Force/xTux/releases/latest"
+	/>
+	<LinkCard
+		title="Tux-Force Wine"
+		description="wine-tux-force-x86_64.tar.xz: Wine with xgameruntime and the GDK fixes, 64-bit, relocatable."
+		href="https://github.com/Tux-Force/wine/releases/latest"
+	/>
+</CardGrid>
+
+How to install them: [Installation](/guide/installation/).
+
+## Other ways
+
+- **From source:** see [Installation](/guide/installation/) for building xTux and Wine yourself.
+- **Development builds:** every successful CI run of the `develop` branch has build artifacts on the repository's
+  *Actions* page (GitHub sign-in needed).
+- **Flatpak:** planned as the first package, with xTux, the launcher and Wine in one app
+  ([launcher plan](/project/launcher-plan/#packaging-flatpak-first)).
+
+xgameruntime has no separate download: it is part of the Wine build.

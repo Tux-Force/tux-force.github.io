@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tux-Force Brand</title>
+<link rel="icon" href="logo-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..900;1,14..32,900&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #06140F; --forest: #0F3B2E; --lime: #A3E635; --emerald: #10B981; --ice: #F4F7FB; --mist: #8FB5A3;
+    --bg: #0A1A14; --surface: #10241C; --line: #1F3B30; --text: #F4F7FB; --muted: #8FB5A3; --accent: #A3E635;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) { --bg: #EEF4F0; --surface: #FFFFFF; --line: #D5E3DA; --text: #06140F; --muted: #4F7564; --accent: #10B981; }
+  }
+  :root[data-theme="light"] { --bg: #EEF4F0; --surface: #FFFFFF; --line: #D5E3DA; --text: #06140F; --muted: #4F7564; --accent: #10B981; }
+  :root[data-theme="dark"] { --bg: #0A1A14; --surface: #10241C; --line: #1F3B30; --text: #F4F7FB; --muted: #8FB5A3; --accent: #A3E635; }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 400 16px/1.6 Inter, system-ui, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 48px 16px 80px; }
+  h1 { font-weight: 900; font-style: italic; font-size: clamp(36px, 7vw, 64px); letter-spacing: -0.03em; margin: 0 0 8px; }
+  h1 span { color: var(--accent); }
+  h2 { font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 56px 0 16px; }
+  p.lead { color: var(--muted); max-width: 62ch; margin: 0; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .hero { margin-top: 32px; background: radial-gradient(circle at 50% 40%, #0F3B2E, #050E0A); border-radius: 20px; padding: 40px 24px; display: grid; place-items: center; }
+  .hero img { width: 100%; max-width: 760px; height: auto; }
+  .tile { display: grid; place-items: center; min-height: 200px; border-radius: 12px; padding: 16px; }
+  .tile img { max-width: 100%; height: auto; }
+  .dark { background: linear-gradient(135deg, #0F3B2E, #06140F); }
+  .light { background: #FFFFFF; border: 1px solid #D5E3DA; }
+  .card p { margin: 12px 0 0; }
+  .sizes { display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+  .swatch { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+  .swatch div { height: 88px; }
+  .swatch p { margin: 0; padding: 12px 14px; font-size: 14px; }
+  .swatch b { display: block; }
+  code { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.9em; color: var(--muted); }
+  .type-big { font-weight: 900; font-style: italic; font-size: 56px; line-height: 1; letter-spacing: -0.03em; }
+  .type-big span { color: var(--accent); }
+  .type-tag { font-weight: 600; letter-spacing: 0.28em; font-size: 16px; color: var(--muted); }
+  ul { margin: 8px 0 0; padding-left: 20px; } li { margin: 6px 0; }
+  .do { border-left: 4px solid var(--accent); } .dont { border-left: 4px solid #F97316; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  td, th { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  .table-wrap { overflow-x: auto; }
+</style>
+</head>
+<body>
+<main>
+  <h1>TUX<span>FORCE</span></h1>
+  <p class="lead">Brand basics for the Tux-Force community fork: a curious penguin taking off, one green palette and a few rules so every repo, README and release looks like it belongs together.</p>
+
+  <div class="hero"><img src="logo-horizontal.svg" alt="Tux-Force logo"></div>
+
+  <h2>Logo</h2>
+  <div class="grid">
+    <div class="card"><div class="tile dark"><img src="logo-mark.svg" width="160" alt="App mark"></div><p><b>Mark</b><br><code>logo-mark.svg</code>, avatar, favicon, app icon.</p></div>
+    <div class="card"><div class="tile dark"><img src="logo-symbol.svg" width="160" alt="Symbol"></div><p><b>Symbol</b><br><code>logo-symbol.svg</code>, next to text on dark surfaces.</p></div>
+    <div class="card"><div class="tile light"><img src="logo-symbol-dark.svg" width="160" alt="Symbol for light backgrounds"></div><p><b>Symbol, light</b><br><code>logo-symbol-dark.svg</code>, on white and paper.</p></div>
+  </div>
+  <div class="grid" style="margin-top:16px">
+    <div class="card"><div class="tile dark"><img src="logo-horizontal.svg" alt="Horizontal logo on dark"></div><p><code>logo-horizontal.svg</code>, dark backgrounds.</p></div>
+    <div class="card"><div class="tile light"><img src="logo-horizontal-light.svg" alt="Horizontal logo on light"></div><p><code>logo-horizontal-light.svg</code>, light backgrounds.</p></div>
+  </div>
+  <div class="grid" style="margin-top:16px">
+    <div class="card"><div class="tile light" style="color:#06140F"><img src="logo-mark-mono.svg" width="160" alt="Single colour"></div><p><b>Single colour</b><br><code>logo-mark-mono.svg</code>, print, stickers, laser.</p></div>
+    <div class="card"><div class="tile dark sizes" style="justify-content:center"><img src="logo-mark.svg" width="96" alt=""><img src="logo-mark.svg" width="48" alt=""><img src="logo-mark.svg" width="32" alt=""><img src="logo-mark.svg" width="16" alt=""></div><p><b>Small sizes</b><br>Stays readable down to 16&nbsp;px.</p></div>
+    <div class="card"><div class="tile dark"><img src="mascot-pixel.svg" width="160" alt="Pixel mascot"></div><p><b>Pixel mascot</b><br><code>mascot-pixel.svg</code>, secondary: stickers, error pages, loading screens. Never as the main logo.</p></div>
+  </div>
+
+  <h2>Colours</h2>
+  <div class="grid">
+    <div class="swatch"><div style="background:#06140F"></div><p><b>Night</b><code>#06140F</code></p></div>
+    <div class="swatch"><div style="background:#0F3B2E"></div><p><b>Forest</b><code>#0F3B2E</code></p></div>
+    <div class="swatch"><div style="background:#A3E635"></div><p><b>Lime</b><code>#A3E635</code></p></div>
+    <div class="swatch"><div style="background:#10B981"></div><p><b>Emerald</b><code>#10B981</code></p></div>
+    <div class="swatch"><div style="background:#F4F7FB"></div><p><b>Ice</b><code>#F4F7FB</code></p></div>
+    <div class="swatch"><div style="background:#8FB5A3"></div><p><b>Mist</b><code>#8FB5A3</code></p></div>
+  </div>
+  <div class="card" style="margin-top:16px"><p style="margin:0">Lime is the brand colour on dark surfaces. On light surfaces use Forest for the symbol and Emerald for “FORCE”, because Lime is too pale on white. The penguin itself stays one colour.</p></div>
+
+  <h2>Typography</h2>
+  <div class="grid">
+    <div class="card"><div class="type-big">TUX<span>FORCE</span></div><p>Wordmark and headlines: <b>Inter Display Black Italic</b>, uppercase, tight tracking.</p></div>
+    <div class="card"><div class="type-tag">PC GAMES ON LINUX</div><p>Taglines: <b>Inter SemiBold</b>, uppercase, wide tracking. Body: <b>Inter Regular</b>. Code: <b>JetBrains Mono</b>.</p></div>
+  </div>
+  <p class="lead" style="margin-top:12px">All fonts are under the SIL Open Font License. The logo files already contain the wordmark as outlines, so they need no installed font.</p>
+
+  <h2>Usage</h2>
+  <div class="grid">
+    <div class="card do"><b>Do</b>
+      <ul>
+        <li>Keep clear space of half the head height around the logo.</li>
+        <li>Let the penguin fly to the right, towards the text.</li>
+        <li>Put the lime logo on Night or Forest, the light lockup on white.</li>
+        <li>Say “community fork of xodus” in every README.</li>
+      </ul>
+    </div>
+    <div class="card dont"><b>Don’t</b>
+      <ul>
+        <li>Mirror, recolour, stretch or rotate the logo.</li>
+        <li>Combine it with Xbox, Game Pass or Microsoft logos.</li>
+        <li>Use Lime for text on white.</li>
+        <li>Use the pixel mascot as the main logo.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Files</h2>
+  <div class="card table-wrap">
+    <table>
+      <tr><th>Purpose</th><th>File</th><th>Size</th></tr>
+      <tr><td>GitHub organisation avatar</td><td><code>png/avatar-1024.png</code></td><td>1024 × 1024</td></tr>
+      <tr><td>Repository social preview</td><td><code>png/social-preview-1280x640.png</code></td><td>1280 × 640</td></tr>
+      <tr><td>README header</td><td><code>logo-horizontal.svg</code>, <code>logo-horizontal-light.svg</code></td><td>vector</td></tr>
+      <tr><td>Website icons</td><td><code>favicon.ico</code>, <code>png/favicon-*.png</code>, <code>png/apple-touch-icon-180.png</code></td><td>16 to 180</td></tr>
+      <tr><td>Mascot</td><td><code>mascot-pixel.svg</code>, <code>png/mascot-pixel-512.png</code></td><td>512 × 512</td></tr>
+    </table>
+  </div>
+</main>
+</body>
+</html>

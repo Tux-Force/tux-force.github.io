@@ -1,0 +1,82 @@
+---
+title: Tux-Force
+description: The PC games you own or subscribe to, on Linux. Real licenses, no cracks.
+template: splash
+hero:
+  title: Your Xbox PC games, on Linux.
+  tagline: Tux-Force runs the Microsoft Store and Game Pass games you own or subscribe to on Linux, the legal way. You sign in with your own account, Microsoft issues the licenses, and the games talk to the real Xbox services.
+  image:
+    file: ../../assets/mascot-pixel.svg
+    alt: The Tux-Force pixel penguin
+  actions:
+    - text: Quick start
+      link: /guide/quick-start/
+      icon: right-arrow
+    - text: Downloads
+      link: /downloads/
+      icon: download
+      variant: secondary
+    - text: GitHub
+      link: https://github.com/Tux-Force
+      icon: github
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Why Tux-Force
+
+<CardGrid>
+	<Card title="Legal, with real licenses" icon="approve-check">
+		No cracks and no license bypass. Only games your Microsoft account owns or your subscription includes will
+		start. Account tokens stay on your PC and only go to Microsoft.
+	</Card>
+	<Card title="A whole ecosystem" icon="puzzle">
+		Not a single tool: sign-in and licenses, downloads, the GDK runtime, a Wine build, automatic prefix setup and a
+		graphical launcher. A store view and community compatibility reports come next.
+	</Card>
+	<Card title="Dual boot friendly" icon="laptop">
+		Games installed by the Windows Xbox app run straight from the Windows partition, no second download. xTux
+		installs use the same layout.
+	</Card>
+	<Card title="AI welcome" icon="rocket">
+		Tux-Force is built with AI tools in the open, and AI-assisted contributions are welcome. What counts is a
+		tested, reviewed result.
+	</Card>
+</CardGrid>
+
+## Where we are
+
+Tux-Force is early software. **Farming Simulator 25 plays** completely, including saves, ModHub and Xbox Live.
+Microsoft Flight Simulator 2024 signs in and reaches its services but does not get past its own backend yet. See the
+[compatibility list](/compatibility/) for details and the [roadmap](/project/roadmap/) for what comes next.
+
+## The pieces
+
+<CardGrid>
+	<LinkCard
+		title="xTux"
+		description="Sign-in, licenses, downloads, game start and the bridge for GDK services. Includes xtux-cli, xtux-service and the xTux Launcher."
+		href="https://github.com/Tux-Force/xTux"
+	/>
+	<LinkCard
+		title="xgameruntime"
+		description="Open source xgameruntime.dll, the GDK runtime games load, for Wine."
+		href="https://github.com/Tux-Force/xgameruntime"
+	/>
+	<LinkCard
+		title="wine"
+		description="The Tux-Force Wine tree with the runtime and fixes for GDK games."
+		href="https://github.com/Tux-Force/wine"
+	/>
+	<LinkCard
+		title="Contributing"
+		description="How to help, including our rules for AI-assisted work."
+		href="/project/contributing/"
+	/>
+</CardGrid>
+
+:::note
+Unofficial community project. Not affiliated with, endorsed by, or sponsored by Microsoft or XBOX. All trademarks
+belong to their respective owners. The penguin is an original drawing, not derived from Larry Ewing's Tux.
+:::
