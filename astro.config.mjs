@@ -74,6 +74,7 @@ export default defineConfig({
 						{ label: 'Launcher plan', slug: 'project/launcher-plan' },
 						{ label: 'Contributing', slug: 'project/contributing' },
 						{ label: 'Brand', slug: 'project/brand' },
+						{ label: 'Licenses', slug: 'project/licenses' },
 					],
 				},
 			],
