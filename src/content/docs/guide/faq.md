@@ -11,7 +11,7 @@ The code is written from public documentation and observed behaviour and contain
 
 ### Is Tux-Force made by Microsoft?
 
-No. It is an unofficial community project, not affiliated with, endorsed by, or sponsored by Microsoft or XBOX.
+No. It is an unofficial community project, not affiliated with, endorsed by, or sponsored by Microsoft or Xbox.
 
 ### Which games work?
 
