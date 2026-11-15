@@ -34,9 +34,15 @@ export default defineConfig({
 			editLink: { baseUrl: `${github}/tux-force.github.io/edit/develop/` },
 			lastUpdated: true,
 			customCss: ['./src/styles/brand.css'],
+			components: {
+				// Adds the navigation bar for the main sections.
+				Header: './src/components/Header.astro',
+			},
 			plugins: [
 				starlightBlog({
 					title: 'News',
+					// The header navigation (src/components/Header.astro) links to the blog instead.
+					navigation: 'none',
 					authors: {
 						tuxforce: { name: 'Tux-Force', picture: '/brand/avatar-512.png', url: github },
 					},
@@ -58,6 +64,7 @@ export default defineConfig({
 				},
 				{ label: 'Compatibility', slug: 'compatibility' },
 				{ label: 'Downloads', slug: 'downloads' },
+				{ label: 'News', link: '/blog/' },
 				{
 					label: 'Project',
 					items: [
