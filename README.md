@@ -29,5 +29,5 @@ English only for now; a German translation goes into `src/content/docs/de/` with
 Changes go through pull requests to `develop`; merging `develop` into `main` publishes the site (see
 [Contributing](https://tux-force.github.io/project/contributing/)).
 
-> Unofficial community project. Not affiliated with, endorsed by, or sponsored by Microsoft or XBOX. The brand assets
+> Unofficial community project. Not affiliated with, endorsed by, or sponsored by Microsoft or Xbox. The brand assets
 > are © Tux-Force.
