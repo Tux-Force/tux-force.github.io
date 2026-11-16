@@ -23,6 +23,16 @@ hero:
 ---
 
 import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import LauncherCarousel from '../../components/LauncherCarousel.astro';
+
+## Inside the launcher
+
+Browse installed games in the library, then explore the Store catalog with Game Pass, Owned and Installed filters.
+Account details and personal paths are redacted in these screenshots.
+
+<LauncherCarousel />
+
+[Explore the launcher](/guide/launcher/).
 
 ## Why Tux-Force
 
@@ -33,7 +43,7 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 	</Card>
 	<Card title="A whole ecosystem" icon="puzzle">
 		Not a single tool: sign-in and licenses, downloads, the GDK runtime, a Wine build, automatic prefix setup and a
-		graphical launcher. A store view and community compatibility reports come next.
+		graphical launcher with a Store catalog. Community compatibility reports come next.
 	</Card>
 	<Card title="Dual boot friendly" icon="laptop">
 		Games installed by the Windows Xbox app run straight from the Windows partition, no second download. xTux
