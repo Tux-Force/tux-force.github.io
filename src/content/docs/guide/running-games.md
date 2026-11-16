@@ -41,6 +41,7 @@ WINEPREFIX=~/Games/other-prefix xtux-cli run -m DE "Atomfall" ~/wine-tux-force-x
 | `[WINE]` | Wine binary, defaults to `wine` from the settings |
 | `-e`, `--exe <exe>` | Start a different executable of the game than the one in `MicrosoftGame.config` |
 | `-m`, `--market <market>` | Store market for the license, for example `DE` |
+| `-- <args...>` | Replace the game arguments saved in the per-game settings for this run |
 
 Before the game starts, xTux fetches its license from Microsoft, so only games your account is entitled to start.
 **Ctrl+C** asks the game to quit, as closing it on Windows would.
@@ -54,7 +55,9 @@ Games the Windows Xbox app installed, usually in `XboxGames` on a Windows partit
 the partition (most desktops do this when you open it in the file manager) and add its `XboxGames` folder to
 `library_dirs`; drives under `/mnt`, `/media` and `/run/media/$USER` are found automatically.
 
-Nothing is copied and no Windows file is changed or deleted.
+xTux reuses these installs without copying them. The launcher also offers **Delete game…**: after confirmation,
+it removes the entire game folder, including Windows installs and any saves inside that folder. Windows then needs
+to repair or reinstall that game.
 
 ## One install format
 
@@ -89,3 +92,27 @@ xtux-cli streaming 9NXN8GF8N9ZQ ~/.local/share/xtux/games/LS25
 The source is the game's store id (the code at the end of its Microsoft Store web address) or a content id. If a
 product has several packages, xTux asks which one. `--parallel <n>` sets the number of parallel downloads. Ctrl+C
 stops the download.
+
+
+## Download queue
+
+The launcher and CLI share the service's persistent download queue. Add a Store ID from the catalog, optionally
+with a configured library folder as the destination:
+
+```bash
+xtux-cli downloads
+xtux-cli downloads add 9NXN8GF8N9ZQ
+xtux-cli downloads pause 1
+xtux-cli downloads resume 1
+xtux-cli downloads up 1
+xtux-cli downloads down 1
+xtux-cli downloads remove 1
+xtux-cli downloads clear
+```
+
+Use the actual queue ID shown by `xtux-cli downloads` in place of `1`. Jobs run one at a time; the service
+continues while the launcher is closed and restores the queue after restart. `remove` can delete a partial
+installation created by that job; `clear` removes completed queue entries, not installed games.
+
+Per-game Wine, prefix, executable, arguments and environment settings saved in the launcher also apply to CLI
+launches. See [Launcher](/guide/launcher/#settings-and-launch-options).

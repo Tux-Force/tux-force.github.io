@@ -15,9 +15,9 @@ description: How the pieces of Tux-Force fit together, from sign-in to a running
 
 - **xtux-service** is the one background service. It holds the account and device tokens, talks to Microsoft,
   downloads games, sets up prefixes, starts Wine with the game and hosts the game bridge.
-- **xtux-cli** and **xtux-launcher** are thin clients. They send requests to the service and show its progress
-  events; they contain no game or license logic of their own. That is why the command line and the launcher always
-  behave the same.
+- **xtux-cli** and **xtux-launcher** use the service for shared game operations and progress. The launcher also
+  reads local settings and artwork. Lower-level CLI research commands still use the core libraries directly.
+  Shared game operations use the same `xtux-games` implementation.
 - **xgameruntime** inside the Tux-Force Wine build implements the GDK runtime the game loads, and asks the service
   through the game bridge for what only Microsoft can answer.
 
@@ -40,13 +40,29 @@ events in between:
 
 | Requests | Events | Responses |
 |---|---|---|
-| `Ping`, `Status`, `Library`, `SignIn`, `PrefixInit`, `Install`, `Launch`, `Cancel` | `Message`, `Bytes`, `File`, `FileFinished`, `GameStarted` | `Pong`, `Status`, `Library`, `PrefixReady`, `Installed`, `GameExited`, `Cancelled`, errors with a kind |
+| `Ping`, `Status`, `Library`, `SignIn`, `PrefixInit`, `Install`, `Launch`, `Catalog`, `Downloads`, `Uninstall`, `Cancel` | `Message`, `Bytes`, `File`, `FileFinished`, `GameStarted` | `Pong`, `Status`, `Library`, `PrefixReady`, `Installed`, `GameExited`, `Catalog`, `Downloads`, `Uninstalled`, `Cancelled`, errors with a kind |
 
 `Cancel` stops a running request by its id (for example a download on Ctrl+C). The older XML messages of the
 runtime are still answered on the same socket.
 
 Sign-in uses Microsoft's web page, so the service starts a small helper (`xtux-cli login`) that shows it in its own
 window; that keeps web view and launcher UI apart.
+
+## Catalog, downloads and settings
+
+`xtux-games::catalog` fetches PC Game Pass and owned-title metadata. Catalog responses are cached per account
+and market for a day; clients can request a refresh. Catalog presence does not replace a launch-time license check.
+
+The service owns a persistent download queue (`$XDG_STATE_HOME/xtux/downloads.json`), processes one install at a time
+and continues without a connected client. Clients use `Downloads` commands to add, pause, resume, reorder, remove
+or clear completed jobs. Queue status includes recent network and disk-rate samples.
+
+Clients share `$XDG_CONFIG_HOME/xtux/settings.toml`, including appearance settings and per-game overrides keyed by
+canonical game folder. The launcher uses `xtux-games` directly for local settings and artwork; service requests
+handle the game, account and download operations. Per-game logs are in `$XDG_STATE_HOME/xtux/logs/`.
+
+The `Uninstall` request removes the checked game folder inside a configured library. This includes Windows installs
+when explicitly confirmed in the launcher; it is a disk deletion, not a library-only unlink.
 
 ## Starting a game
 
