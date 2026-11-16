@@ -30,10 +30,10 @@ It does this:
 ## One prefix or one per game
 
 By default all games share one prefix. That saves space and time, and works for the tested games. A game can use its
-own prefix: set `WINEPREFIX` when you start it, or (planned) choose it in the launcher's per-game settings.
+own prefix: set `WINEPREFIX` when you start it, or choose it in the launcher's per-game settings.
 
 ```bash
 WINEPREFIX=~/Games/msfs-prefix xtux-cli run "Microsoft Flight Simulator 2024"
 ```
 
-Run `prefix init` for every prefix you use.
+Run `prefix init` for every prefix you use. The launcher does not initialize a new prefix automatically yet.

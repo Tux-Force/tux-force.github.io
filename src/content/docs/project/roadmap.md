@@ -3,6 +3,8 @@ title: Roadmap
 description: Where Tux-Force is and what comes next.
 ---
 
+Source status checked on 2026-11-16. Implemented means present in the current source, not a guarantee for every game.
+
 Where we are and what comes next. The detailed plan for the launcher is in the [launcher plan](/project/launcher-plan/).
 
 ## Phase 1: Foundation
@@ -23,15 +25,19 @@ Where we are and what comes next. The detailed plan for the launcher is in the [
 ## Phase 3: Launcher (now)
 
 - [x] Background service with thin clients (CLI and launcher), protocol v2
-- [ ] Launcher milestone 1: sign-in, local library, play and settings work; per-game settings, log view and Flatpak are next
-- [ ] Library of owned and Game Pass games
+- [x] Sign-in, local library, Play/Stop, per-game settings and logs
+- [ ] Flatpak build and packaging
+- [x] Store catalog of owned and PC Game Pass games with search, filters and artwork
 - [x] Reuse Windows installs in place, one install format for all
-- [ ] Install, update, verify, uninstall from the launcher
-- [ ] One-click play with per-game settings
+- [x] Store installs with a persistent queue, progress, pause/resume and reordering
+- [x] Delete installed games from the launcher after confirmation
+- [ ] Update checks and verification of installed games
+- [x] One-click play with per-game Wine, prefix, executable, arguments and environment
+- [ ] Automatic prefix setup on first launch
 
 ## Phase 4: Ecosystem
 
-- [ ] Store view: catalog and subscription contents
+- [x] Store view: PC Game Pass catalog and owned titles
 - [ ] Compatibility reports per game (GitHub-based)
 - [ ] Cloud saves, achievements, friends
 - [ ] Packages for common distributions (Flatpak first)
