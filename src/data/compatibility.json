@@ -9,7 +9,7 @@
     "game": "Microsoft Flight Simulator 2024",
     "status": "fails",
     "tested": "2026-11",
-    "notes": "Starts now: an install the Windows Xbox app left half-updated was updated by xTux, and the license check works with the SKU store id fix in xgameruntime. Gameplay not verified yet."
+    "notes": "Gets further now: xTux finished an update the Windows Xbox app had left half-done, and the license check passes with the SKU store id fix in xgameruntime; the game then starts. Not confirmed playable yet, so the status stays until a full test."
   },
   {
     "game": "Minecraft for Windows",
