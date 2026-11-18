@@ -1,11 +1,12 @@
 ---
 title: Quick start
-description: From download to the first game in a few commands.
+description: From download to the first game in a few minutes; the setup does the rest.
 ---
 
 import { Steps } from '@astrojs/starlight/components';
 
-This page gets a game running with as few steps as possible. Each step has its own page with the details.
+xTux sets itself up: it downloads the Tux-Force Wine, prepares the Wine prefix and finds your game folders. You only
+sign in with your Microsoft account.
 
 **You need:** a 64-bit x86 Linux PC with a Vulkan GPU driver, a Microsoft account that owns the game or has a PC Game
 Pass subscription, and the game either installed by the Windows Xbox app on a partition Linux can read, or enough
@@ -13,53 +14,32 @@ space to download it.
 
 <Steps>
 
-1. **Download** the latest [xTux release](/downloads/) (`xtux-cli`, `xtux-service`, `xtux-launcher`) and the
-   Tux-Force Wine build, and unpack both. Put the three xTux programs in the same folder, for example `~/.local/bin`.
-   Details: [Installation](/guide/installation/).
-
-2. **Sign in** once with your Microsoft account. A sign-in window opens:
+1. **Install xTux.** Download `xtux-linux-x86_64.flatpak` from the [newest xTux release](/downloads/) and install it:
 
    ```bash
-   xtux-cli login
+   flatpak install --user xtux-linux-x86_64.flatpak
    ```
 
-   On the very first start xTux registers your PC with Microsoft and may ask for your password once. The
-   [sign-in page](/guide/sign-in/) explains why.
+   The Flatpak brings everything the sign-in window needs. Prefer a plain archive?
+   See [Installation](/guide/installation/).
 
-3. **Prepare a Wine prefix** with DXVK, vkd3d-proton and the Microsoft root certificates games expect:
+2. **Start xTux** from your desktop's app menu, or with `flatpak run io.github.tux_force.xTux`.
 
-   ```bash
-   xtux-cli prefix init ~/wine-tux-force-x86_64/bin/wine --prefix ~/Games/xtux-prefix
-   ```
+3. **Set everything up.** The first start opens **Welcome to xTux**. Choose **Set everything up**: xTux opens
+   Microsoft's sign-in window, then downloads the Tux-Force Wine (checked against its SHA-256 file), prepares the
+   prefix with DXVK, vkd3d-proton and the certificates games expect, and finds your game folders, including the
+   `XboxGames` folders of Windows drives. On the very first sign-in xTux registers your PC with Microsoft and may
+   ask for your password once; the [sign-in page](/guide/sign-in/) explains why.
 
-   Details: [Wine prefix](/guide/prefix/).
+4. **Install if needed.** If the game is not installed yet, choose it in **Store**, select **Install** and add it to
+   **Downloads**. See [Launcher](/guide/launcher/#installing-and-deleting-games).
 
-4. **Tell xTux where things are** in `~/.config/xtux/settings.toml`, so you do not have to repeat them:
-
-   ```toml
-   library_dirs = ["/home/you/.local/share/xtux/games", "/mnt/windows/XboxGames"]
-   wine = "/home/you/wine-tux-force-x86_64/bin/wine"
-   prefix = "/home/you/Games/xtux-prefix"
-   ```
-
-   The launcher's **Settings** page writes the same file.
-
-5. **Install if needed.** If the game is not installed yet, open `xtux-launcher`, choose a title in **Store**, select
-   **Install** and add it to **Downloads**. Choose one of your configured library folders. See
-   [Launcher](/guide/launcher/#installing-and-deleting-games) or use the
-   [CLI download queue](/guide/running-games/#download-queue).
-
-6. **Play.** List your games and start one by name (Tab completes the names):
-
-   ```bash
-   xtux-cli list
-   xtux-cli run "Farming Simulator 25 (PC)"
-   ```
-
-   Or open the **xTux Launcher** (`xtux-launcher`) and press **Play**. Details:
-   [Running games](/guide/running-games/) and [Launcher](/guide/launcher/).
+5. **Play.** Press **Play** in the library.
 
 </Steps>
+
+Prefer the terminal? `xtux-cli` without a command shows what is set up, runs the same setup in the terminal and has a
+menu to play your games. See [Running games](/guide/running-games/).
 
 Something does not work? See [Troubleshooting](/guide/troubleshooting/), and check the
 [compatibility list](/compatibility/) for the game.

@@ -14,7 +14,7 @@ description: How the pieces of Tux-Force fit together, from sign-in to a running
 ```
 
 - **xtux-service** is the one background service. It holds the account and device tokens, talks to Microsoft,
-  downloads games, sets up prefixes, starts Wine with the game and hosts the game bridge.
+  downloads, updates and verifies games, sets up prefixes, starts Wine with the game and hosts the game bridge.
 - **xtux-cli** and **xtux-launcher** use the service for shared game operations and progress. The launcher also
   reads local settings and artwork. Lower-level CLI research commands still use the core libraries directly.
   Shared game operations use the same `xtux-games` implementation.
@@ -40,7 +40,7 @@ events in between:
 
 | Requests | Events | Responses |
 |---|---|---|
-| `Ping`, `Status`, `Library`, `SignIn`, `PrefixInit`, `Install`, `Launch`, `Catalog`, `Downloads`, `Uninstall`, `Cancel` | `Message`, `Bytes`, `File`, `FileFinished`, `GameStarted` | `Pong`, `Status`, `Library`, `PrefixReady`, `Installed`, `GameExited`, `Catalog`, `Downloads`, `Uninstalled`, `Cancelled`, errors with a kind |
+| `Ping`, `Status`, `Library`, `SignIn`, `PrefixInit`, `Install`, `Launch`, `Catalog`, `CheckUpdates`, `Downloads`, `Uninstall`, `Cancel` | `Message`, `Bytes`, `File`, `FileFinished`, `GameStarted` | `Pong`, `Status`, `Library`, `PrefixReady`, `Installed`, `GameExited`, `Catalog`, `Updates`, `Downloads`, `Uninstalled`, `Cancelled`, errors with a kind |
 
 `Cancel` stops a running request by its id (for example a download on Ctrl+C). The older XML messages of the
 runtime are still answered on the same socket.
@@ -69,9 +69,13 @@ when explicitly confirmed in the launcher; it is a disk deletion, not a library-
 1. The service reads the game folder: `Content/` plus the package header named by the content id (the layout of the
    Windows Xbox app), or the older Xodus layout. See [Running games](/guide/running-games/#one-install-format).
 2. It fetches the game's license for the signed-in account. Without an entitlement the game does not start.
-3. It starts Wine with the game, the DLL overrides recorded by `prefix init`, and the address and a per-run secret of
-   the game bridge.
-4. It reports `GameStarted` with the process id and `GameExited` with the exit code to the client.
+3. It prepares the prefix for this game: the controller mode from the settings, the GameInput redistributable from
+   the game's `Installers` folder, and a Windows package identity for games that depend on the Windows App Runtime.
+4. It starts Wine with the game (for some games, such as Minecraft for Windows, an unencrypted entry executable from
+   the game folder), the DLL overrides recorded by `prefix init`, and the address and a per-run secret of the game
+   bridge.
+5. It reports `GameStarted` with the process id and `GameExited` with the exit code to the client; after a crash it
+   names the cause it found.
 
 ## The game bridge
 
@@ -89,7 +93,7 @@ relying party for each service from the title's own endpoint table.
 |---|---|---|
 | [xTux](https://github.com/Tux-Force/xTux) | `xodus` (core: auth, APIs, tokens), `msixvc` (packages), `xtux-games`, `xtux-protocol`, `xtux-service`, `xtux-cli`, `xtux-launcher` | [xodus-gaming/xodus](https://github.com/xodus-gaming/xodus) |
 | [xgameruntime](https://github.com/Tux-Force/xgameruntime) | `xgameruntime.dll`: task queues, async, users, store, saves, networking, package identity | [xodus-gaming/xgameruntime](https://github.com/xodus-gaming/xgameruntime) |
-| [wine](https://github.com/Tux-Force/wine) | Wine with xgameruntime as a submodule and WinHTTP fixes for GDK games | [xodus-gaming/wine](https://github.com/xodus-gaming/wine) |
+| [wine](https://github.com/Tux-Force/wine) | Wine with xgameruntime as a submodule (built in) and WinHTTP fixes for GDK games; releases are built on CI | [xodus-gaming/wine](https://github.com/xodus-gaming/wine) |
 | [tux-force.github.io](https://github.com/Tux-Force/tux-force.github.io) | This website: guide, compatibility list, project documents, brand | |
 
 Upstream changes are pulled in when useful; nothing is pushed upstream.
