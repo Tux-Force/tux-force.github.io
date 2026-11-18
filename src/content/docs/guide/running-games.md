@@ -39,7 +39,7 @@ WINEPREFIX=~/Games/other-prefix xtux-cli run -m DE "Atomfall" ~/wine-tux-force-x
 | Option | Effect |
 |---|---|
 | `[WINE]` | Wine binary, defaults to `wine` from the settings |
-| `-e`, `--exe <exe>` | Start a different executable of the game than the one in `MicrosoftGame.config` |
+| `-e`, `--exe <exe>` | Start a different executable of the game than the one xTux picks from `MicrosoftGame.config` |
 | `-m`, `--market <market>` | Store market for the license, for example `DE` |
 | `-- <args...>` | Replace the game arguments saved in the per-game settings for this run |
 
@@ -49,13 +49,35 @@ Before the game starts, xTux fetches its license from Microsoft, so only games y
 If the same game is installed twice (for example once by Windows and once by xTux), `run` lists both folders and asks
 you to pick one by path.
 
+Some games need extra setup, which xTux does on its own: games such as Minecraft for Windows start an unencrypted
+entry executable from the game folder, get a Windows package identity when they depend on the Windows App Runtime,
+and get the GameInput redistributable from their own `Installers` folder installed into the prefix.
+
+If a game crashes, xTux shows a message with the cause it found, and a hint when the graphics card has little video
+memory.
+
+## Controllers
+
+PlayStation controllers (DualShock 4, DualSense, DualSense Edge) reach games as **Xbox gamepads** through SDL by
+default, because most GDK games only know Xbox gamepads. For a game with its own PlayStation support, choose
+**As PlayStation controller** in **Settings → Games** or in the game's settings in the launcher, or in
+`settings.toml`:
+
+```toml
+controller = "native"   # default: "xbox"
+```
+
+The setting is per prefix: a change applies once all games of that prefix are closed.
+
 ## Windows Xbox app installs (dual boot)
 
 Games the Windows Xbox app installed, usually in `XboxGames` on a Windows partition, run straight from there. Mount
 the partition (most desktops do this when you open it in the file manager) and add its `XboxGames` folder to
 `library_dirs`; drives under `/mnt`, `/media` and `/run/media/$USER` are found automatically.
 
-xTux reuses these installs without copying them. The launcher also offers **Delete game…**: after confirmation,
+xTux reuses these installs without copying them, and can update them: the launcher's **Updates** page and
+`xtux-cli downloads check` also find updates the Xbox app left unfinished (see [Updates](#updates-and-verification)).
+The launcher also offers **Delete game…**: after confirmation,
 it removes the entire game folder, including Windows installs and any saves inside that folder. Windows then needs
 to repair or reinstall that game.
 
@@ -114,5 +136,17 @@ Use the actual queue ID shown by `xtux-cli downloads` in place of `1`. Jobs run 
 continues while the launcher is closed and restores the queue after restart. `remove` can delete a partial
 installation created by that job; `clear` removes completed queue entries, not installed games.
 
-Per-game Wine, prefix, executable, arguments and environment settings saved in the launcher also apply to CLI
-launches. See [Launcher](/guide/launcher/#settings-and-launch-options).
+## Updates and verification
+
+```bash
+xtux-cli downloads check
+xtux-cli downloads update /mnt/windows/XboxGames/Atomfall
+xtux-cli verify /mnt/windows/XboxGames/Atomfall
+```
+
+`downloads check` lists installed games with their installed and latest version, for xTux installs and Windows Xbox app
+installs alike, including updates the Xbox app started but did not finish. `downloads update <folder>` adds the update
+to the download queue. `verify <folder>` checks the files of an installed game against its package.
+
+Per-game Wine, prefix, executable, arguments, environment and controller settings saved in the launcher also apply to
+CLI launches. See [Launcher](/guide/launcher/#settings-and-launch-options).

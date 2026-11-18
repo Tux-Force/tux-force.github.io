@@ -22,7 +22,7 @@ Tools exist for single pieces. Tux-Force wants the whole path from "I have Game 
 | Content | xTux: downloads, streaming, reuse of Windows Xbox app installs (dual boot) | works |
 | Game services | xgameruntime: task queues, users, saves, store, networking; xTux bridge for tokens | works for tested games |
 | Compatibility | Wine tree with the runtime and fixes; DXVK/vkd3d-proton and certificate setup with `xtux-cli prefix init` | works |
-| Launcher | xTux Launcher: local library, play, per-game settings, logs, Store catalog and queued installs | implemented; updates and verify planned |
+| Launcher | xTux Launcher: local library, play, per-game settings, logs, Store catalog and queued installs | implemented, with updates, verify and a guided setup |
 | Store view | Browse PC Game Pass and owned titles, inspect supported packages and queue installs | implemented; title entitlement checked at launch |
 | Community | Compatibility reports per game (GitHub-based, no own server needed at first); [list](/compatibility/) started | started |
 | Extras | Cloud saves, achievements and friends overlay | planned |

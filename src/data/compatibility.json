@@ -9,6 +9,12 @@
     "game": "Microsoft Flight Simulator 2024",
     "status": "fails",
     "tested": "2026-11",
-    "notes": "Signs in and reaches its services, shows a cloud save and an antivirus warning, then crashes while loading. Under investigation."
+    "notes": "Gets further now: xTux finished an update the Windows Xbox app had left half-done, and the license check passes with the SKU store id fix in xgameruntime; the game then starts. Not confirmed playable yet, so the status stays until a full test."
+  },
+  {
+    "game": "Minecraft for Windows",
+    "status": "issues",
+    "tested": "2026-11-18",
+    "notes": "Starts and is playable; keyboard, mouse and a hot-plugged DualSense work. Saves and online features not verified yet."
   }
 ]

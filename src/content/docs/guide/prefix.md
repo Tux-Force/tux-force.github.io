@@ -19,6 +19,13 @@ It does this:
 4. Records the setup in `xtux-prefix.json` in the prefix. `xtux-cli run` and the launcher read the DLL overrides from
    there, so you do not need to set `WINEDLLOVERRIDES` yourself.
 
+Some things are set up automatically when a game starts, not by `prefix init`:
+
+- **GameInput:** if a game ships the GameInput redistributable (`Installers/GameInputRedist.msi` in its folder, as
+  Minecraft for Windows does), xTux installs it into the prefix.
+- **Controller mode:** the [controller setting](/guide/running-games/#controllers) is written into the prefix. A
+  change applies once all games of that prefix are closed.
+
 ## Options
 
 | Option | Effect |
