@@ -23,25 +23,38 @@ enlarged overlay; use the arrows or swipe to browse, and Escape or the close but
 
 [Download branded social-media versions](/project/brand/#launcher-social-media-images) of all three views.
 
+## First start
+
+When something is still missing, the launcher opens **Welcome to xTux** with the five setup steps: Microsoft
+account, Wine, Wine prefix, game library and controllers. **Set everything up** runs all missing steps; only the
+sign-in needs you. **Later** goes to the library; **Settings → Games → Run the setup…** opens the page again. See
+[Installation](/guide/installation/#the-setup).
+
 ## Pages
 
 - **Library:** installed games from the configured library folders, as a cover grid or list. Search, refresh,
   Play/Stop controls, install-source labels, license errors and file-based anti-cheat indicators are available.
 - **Game details:** artwork, Play/Stop, the last launch log and per-game Wine binary, prefix, executable,
-  arguments and environment variables. Empty settings inherit the global defaults; **Save** persists changes.
+  arguments, environment variables and controller mode. Empty settings inherit the global defaults; **Save** persists changes.
 - **Store:** browse PC Game Pass and owned titles; filter by Game Pass, Owned, Installed or Installable only.
   A title page shows artwork, description, package information and a screenshot gallery. A catalog listing is
   not proof that your account is entitled to play a title; Microsoft checks the license at launch.
 - **Downloads:** choose a configured library folder from a Store title and add an install to the service's queue.
   View progress, network/disk activity, pause, resume, reorder and remove jobs, or clear finished entries.
   The service processes one queued install at a time and saves the queue across restarts.
-- **Settings:** global Wine binary, shared prefix and library folders, plus theme, accent, background, app icon,
+- **Updates:** checks xTux installs and Windows Xbox app installs for updates, also finds updates the Xbox app left
+  unfinished, and queues the update as a download.
+- **Settings:** global Wine binary, shared prefix and library folders, controller mode (**Settings → Games**:
+  *As Xbox gamepad* or *As PlayStation controller*), plus theme, accent, background, app icon,
   online artwork and the optional title-name-based anti-cheat estimate for Store titles.
 - **Logs:** view and reload the service log. The game detail page shows the last game log separately.
 - **About:** version, license, project links and third-party licenses.
 - **Sign in:** opens Microsoft's sign-in window in a separate helper process.
 
 The status bar shows game starts, exits and errors. Closing the launcher does not stop the service's queued downloads.
+
+When a game crashes, a message names the cause xTux found (for example a license problem, a missing DLL or
+running out of memory) and hints when the graphics card has little video memory.
 
 ## Installing and deleting games
 
@@ -52,9 +65,9 @@ Titles without a supported PC package cannot be installed. A Store title with a 
 to Windows Xbox app installs; Windows will need to repair or reinstall them afterwards. Local saves inside that
 folder are deleted too. This action does not simply hide a game from the library.
 
-Update checks and verification of an already installed game are not available in the launcher yet. Flatpak
-packaging and automatic first-launch prefix setup remain planned. Prepare each prefix using
-[`xtux-cli prefix init`](/guide/prefix/) before using it.
+Updates of installed games, including Windows Xbox app installs, are on the **Updates** page;
+`xtux-cli verify <folder>` checks an installed game's files. The [setup](#first-start) prepares the shared prefix;
+a per-game prefix is prepared with [`xtux-cli prefix init`](/guide/prefix/).
 
 ## Settings and launch options
 
@@ -64,12 +77,13 @@ choose a separate prefix in a game's settings if needed and initialize it first.
 
 ```bash
 xtux-launcher --page store
+xtux-launcher --page updates
 xtux-launcher --page settings
 xtux-launcher --game "Farming Simulator 25 (PC)"
 xtux-launcher --play "Farming Simulator 25 (PC)"
 ```
 
-`--page` accepts `library`, `store`, `settings`, `about` and `logs`. `--game` opens an installed game's page;
+`--page` accepts `library`, `store`, `updates`, `settings`, `about` and `logs`. `--game` opens an installed game's page;
 `--play` starts it. If a game is installed more than once, use its folder path.
 
 ## Artwork and anti-cheat

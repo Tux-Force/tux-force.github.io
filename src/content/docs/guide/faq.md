@@ -40,7 +40,13 @@ Either your keychain is locked, or the PC is registered with Microsoft for the f
 
 ### Does it work on the Steam Deck?
 
-Not tested yet. A launcher mode for controllers and the Deck comes after the first launcher version.
+Not tested yet. A controller-driven launcher mode for the Deck is still planned.
+
+### Do controllers work?
+
+Yes, in games. Xbox controllers work as usual. PlayStation controllers (DualShock 4, DualSense, DualSense Edge) reach
+games as Xbox gamepads by default; see [Controllers](/guide/running-games/#controllers). The launcher itself is still
+used with mouse and keyboard.
 
 ### How is this different from Xodus?
 

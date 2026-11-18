@@ -50,14 +50,38 @@ The same game is in two library folders. Start it by path, as the message shows.
 
 ### The game shows a black screen or no intro video
 
-Make sure the prefix was set up with `xtux-cli prefix init` and that you start the game with the Tux-Force Wine
-build; it contains the video decoder setup and runtime the games need. Check the
+Make sure the prefix was set up with `xtux-cli prefix init` and that you start the game with the
+[Tux-Force Wine release](/downloads/); it contains the video decoder setup and runtime the games need. Check the
 [compatibility list](/compatibility/) for known problems with the game.
 
 ### The game cannot reach its online services
 
 Run `xtux-cli prefix init` again: it adds the Microsoft root certificates games expect. Check the service log for
 errors of the game bridge.
+
+### The game crashed
+
+xTux shows a message with the cause it found, for example a license problem, a missing DLL or running out of
+memory. When the graphics card has little video memory, the message says so; lower the graphics settings or the
+resolution. The game log (see the launcher's game page) has the details.
+
+### A game no longer starts after an update on Windows
+
+The Windows Xbox app may have left an update unfinished. Check and update the game, then verify it:
+
+```bash
+xtux-cli downloads check
+xtux-cli downloads update <game folder>
+xtux-cli verify <game folder>
+```
+
+In the launcher, the **Updates** page does the same.
+
+### A PlayStation controller does not work in a game
+
+By default DualShock 4, DualSense and DualSense Edge reach games as Xbox gamepads. If a game expects a PlayStation
+controller, switch the [controller setting](/guide/running-games/#controllers) to *As PlayStation controller*.
+Close all games of the prefix before you try again: the change applies only then.
 
 ### xtux-cli crashes with "illegal instruction"
 

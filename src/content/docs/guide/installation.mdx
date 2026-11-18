@@ -1,31 +1,46 @@
 ---
 title: Installation
-description: Install xTux, the Tux-Force Wine build and the launcher, from a release or from source.
+description: Install xTux as a Flatpak, from a release archive or from source; the setup downloads Wine.
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-Tux-Force consists of three parts you install once:
+Tux-Force consists of three parts. You install xTux; the setup brings the other two:
 
 | Part | What it is | Comes as |
 |---|---|---|
 | **xTux** | `xtux-cli` (command line), `xtux-service` (background service) and `xtux-launcher` (graphical launcher) | `xtux-<version>-linux-x86_64.tar.gz` |
-| **Tux-Force Wine** | Wine with the open source GDK runtime (`xgameruntime.dll`) and fixes for GDK games | `wine-tux-force-x86_64.tar.xz` |
-| **Graphics layers** | DXVK and vkd3d-proton (Direct3D on Vulkan) | downloaded by `xtux-cli prefix init` |
+| **Tux-Force Wine** | Wine with the open source GDK runtime (`xgameruntime.dll`, built in) and fixes for GDK games | `wine-tux-force-x86_64.tar.xz`, downloaded by the setup |
+| **Graphics layers** | DXVK and vkd3d-proton (Direct3D on Vulkan) | downloaded by the setup (`xtux-cli prefix init`) |
 
-A Flatpak with everything in it is planned (see the [launcher plan](/project/launcher-plan/)).
+After installing, start the launcher or `xtux-cli`: the [setup](#the-setup) does the rest.
 
 ## Requirements
 
 - 64-bit x86 Linux, a CPU with AES instructions (every CPU from about 2011 on).
 - A Vulkan capable GPU driver (Mesa or NVIDIA).
 - A Secret Service keychain for the sign-in tokens: GNOME Keyring or KWallet, which desktops usually run already.
-- For the sign-in window: WebKitGTK (`webkit2gtk-4.1`).
+- For the sign-in window: WebKitGTK (`webkit2gtk-4.1`); the Flatpak brings it.
 
 <Tabs>
-<TabItem label="From a release">
+<TabItem label="Flatpak">
 
-1. Download both archives from the [downloads page](/downloads/).
+Download `xtux-linux-x86_64.flatpak` from the [downloads page](/downloads/) and install it:
+
+```bash
+flatpak install --user xtux-linux-x86_64.flatpak
+flatpak run io.github.tux_force.xTux
+```
+
+It runs on the GNOME runtime, which contains WebKitGTK; Flatpak downloads the runtime on the first install. The
+terminal client is `flatpak run --command=xtux-cli io.github.tux_force.xTux`. Inside the Flatpak, settings and the
+downloaded Wine live below `~/.var/app/io.github.tux_force.xTux/`; the app can read your home folder, `/mnt`,
+`/media` and `/run/media` for game libraries.
+
+</TabItem>
+<TabItem label="From a release archive">
+
+1. Download the xTux archive from the [downloads page](/downloads/).
 2. Unpack xTux and put the three programs into one folder in your `PATH`; `xtux-cli` and `xtux-launcher` start
    `xtux-service` from the same folder:
 
@@ -33,14 +48,16 @@ A Flatpak with everything in it is planned (see the [launcher plan](/project/lau
    tar -xzf xtux-*-linux-x86_64.tar.gz -C ~/.local/bin xtux-cli xtux-service xtux-launcher
    ```
 
-3. Unpack Wine anywhere, for example into your home folder:
+3. Start `xtux-launcher` or `xtux-cli`; the setup downloads the Tux-Force Wine.
 
-   ```bash
-   tar -xJf wine-tux-force-x86_64.tar.xz -C ~
-   ~/wine-tux-force-x86_64/bin/wine --version
-   ```
+Each release has a `SHA256SUMS` or `.sha256` file to check the download, for example:
 
-Each release has a `SHA256SUMS` or `.sha256` file to check the download.
+```bash
+sha256sum -c xtux-*-linux-x86_64.tar.gz.sha256
+```
+
+The Wine build contains xgameruntime as a builtin DLL; there is nothing else to download or copy into the prefix.
+To use a Wine of your own instead, choose it in the setup or set `wine` in the settings below.
 
 </TabItem>
 <TabItem label="From source">
@@ -61,14 +78,33 @@ Wine with the runtime (64-bit only, as used for testing):
 ```bash
 git clone https://github.com/Tux-Force/wine
 cd wine
-git submodule update --init dlls/xgameruntime
+./autogen.sh
 ./configure --enable-archs=x86_64 --without-opencl
 make -j$(nproc)
 # ./wine is the Wine binary to use
 ```
 
+xgameruntime is a separate CMake/MinGW project in the `xgameruntime` submodule; the
+[Wine README](https://github.com/Tux-Force/wine#readme) shows how to build it and add it as a builtin DLL.
+
 </TabItem>
 </Tabs>
+
+## The setup
+
+The first start of the launcher opens **Welcome to xTux**; `xtux-cli` without a command offers the same steps in the
+terminal, and `xtux-cli setup` or **Settings → Games → Run the setup…** runs them again. Steps that are done are
+skipped:
+
+1. **Microsoft account:** the sign-in window opens.
+2. **Wine:** the newest [Tux-Force Wine](https://github.com/Tux-Force/wine/releases) release is downloaded, checked
+   against its SHA-256 file and unpacked into `~/.local/share/xtux/wine`. Later runs offer newer releases.
+3. **Wine prefix:** created and prepared with DXVK, vkd3d-proton, the Microsoft root certificates and the controller
+   mode, as [`xtux-cli prefix init`](/guide/prefix/) does.
+4. **Game library:** folders are found automatically; you can add more.
+5. **Controllers:** how PlayStation controllers reach games.
+
+In the launcher, **Set everything up** runs all missing steps in this order; only the sign-in needs you.
 
 ## Shell completion
 
@@ -100,7 +136,8 @@ Settings shared by `xtux-cli` and the launcher live in `~/.config/xtux/settings.
 
 | Key | Meaning | Default |
 |---|---|---|
-| `library_dirs` | Folders that contain one folder per game | `~/.local/share/xtux/games` plus every `XboxGames` folder found on drives under `/mnt`, `/media` and `/run/media/$USER` |
-| `wine` | Wine binary used to start games | none, must be set (or passed to `run`) |
+| `library_dirs` | Folders that contain one folder per game | `~/.local/share/xtux/games` plus every `XboxGames` folder found under `/mnt`, `/media`, `/run/media/$USER` and the home folder |
+| `wine` | Wine binary used to start games | the Tux-Force Wine the setup installed |
 | `prefix` | Wine prefix for games | `WINEPREFIX`, else `~/Games/xtux-prefix` |
 | `market` | Store market, for example `DE` | from the system language |
+| `controller` | How PlayStation controllers reach games: `"xbox"` (as an Xbox gamepad) or `"native"` (as a PlayStation controller), see [Controllers](/guide/running-games/#controllers) | `"xbox"` |

@@ -3,7 +3,7 @@ title: Launcher plan
 description: Implemented launcher features, remaining work and original design decisions.
 ---
 
-Source status checked on **2026-11-16** against `xtux-launcher`, `xtux-games`, `xtux-protocol` and `xtux-service`.
+Source status checked on **2026-11-18** against `xtux-launcher`, `xtux-games`, `xtux-protocol` and `xtux-service`.
 This page distinguishes implemented features from design targets. It does not certify individual games or claim
 that unreleased source changes are already in a downloadable binary.
 
@@ -15,12 +15,13 @@ that unreleased source changes are already in a downloadable binary.
 | Protocol | `XTX2` magic, 32-bit length-prefixed JSON frames, request IDs, responses and progress events; legacy runtime XML still supported | No protobuf client protocol is used |
 | Account | Sign-in through a separate `xtux-cli login` helper and account status in the launcher | Richer account and subscription management |
 | Local library | Grid/list, search, refresh, Windows installs in place, Play/Stop, license and anti-cheat indicators | Community compatibility reports |
-| Game page | Artwork, per-game Wine/prefix/exe/args/env, last launch log, confirmed deletion | Installed-game update checks and verify |
+| Game page | Artwork, per-game Wine/prefix/exe/args/env/controller mode, last launch log, crash cause message, confirmed deletion | |
 | Store | PC Game Pass and owned-title catalog, filters, details, artwork and screenshot gallery | Purchasing, pricing and wishlists are outside the current scope |
-| Installs | Store install flow, library selection, persistent service queue, pause/resume, ordering, progress and activity graphs | Broader package support and update management |
-| Settings | Shared TOML settings, themes, accents, background, icons, online artwork toggle | More compatibility wrappers and translations |
-| Prefixes | Shared prefix by default, per-game override, CLI `prefix init` | Automatic setup/upgrade before first play |
-| Packaging | Release binaries | Flatpak bundle and CI packaging |
+| Installs | Store install flow, library selection, persistent service queue, pause/resume, ordering, progress and activity graphs | Broader package support |
+| Updates | Update checks and updates for xTux and Windows Xbox app installs, unfinished Xbox app updates, `xtux-cli verify` | |
+| Settings | Shared TOML settings, controller mode, themes, accents, background, icons, online artwork toggle | More compatibility wrappers and translations |
+| Prefixes | Shared prefix by default, per-game override, CLI `prefix init`, guided setup in launcher and CLI | Upgrades of DXVK/vkd3d-proton without asking |
+| Packaging | Release binaries, Flatpak bundle (CI-built), Tux-Force Wine release built on CI and downloaded by the setup | Flathub |
 
 A Store entry or Game Pass badge does not confirm the current account's entitlement. Microsoft checks the license
 at launch. Optional Store anti-cheat estimates use title names and are unverified; installed games are checked by files.
@@ -54,9 +55,12 @@ including a Windows installation and saves inside that folder. It is not merely 
 
 ## Packaging (Flatpak first)
 
-Flatpak remains the planned first integrated package, with app ID `io.github.TuxForce.xTux` from the original design.
-A bundled Wine/runtime build, permissions, sign-in helper and CI packaging still need implementation and validation.
-For the available separate binaries, see [Downloads](/downloads/) and [Installation](/guide/installation/).
+Every xTux release has a Flatpak bundle, `xtux-linux-x86_64.flatpak`, with app ID `io.github.tux_force.xTux`
+(the reverse domain of tux-force.github.io). It runs on the GNOME runtime, which contains WebKitGTK for the sign-in;
+xTux downloads the Tux-Force Wine into the app's data folder and runs games in the sandbox, with access to the home
+folder, `/mnt`, `/media`, `/run/media` and the devices (GPU, controllers). The CI builds the bundle from the release
+binaries and smoke-tests it. Publishing on Flathub is the next step. See [Downloads](/downloads/) and
+[Installation](/guide/installation/).
 
 ## Milestones
 
@@ -65,10 +69,10 @@ The original milestone groups overlap with features already implemented. They ar
 | Milestone | Current status | Remaining work |
 | --- | --- | --- |
 | M0: shared logic and service | Implemented with `xtux-games`, `xtux-protocol` and JSON protocol v2 | Continue runtime integration |
-| M1: local launcher | Library, sign-in, Play/Stop, settings and logs implemented | Flatpak packaging |
+| M1: local launcher | Library, sign-in, Play/Stop, settings, logs, guided setup and Flatpak bundle implemented | Flathub |
 | M2: catalog and installs | Owned-title catalog, artwork and queued installs implemented | Broader real-world package validation |
-| M3: Game Pass and management | PC catalog, filters and confirmed game deletion implemented | Update checks and verify |
-| M4: v1 polish | Prefix init available through CLI; per-game prefix selection implemented | Automatic prefix setup, compatibility wrappers, reports and translations |
+| M3: Game Pass and management | PC catalog, filters, confirmed game deletion, update checks and verify implemented | |
+| M4: v1 polish | Guided setup with Wine download and prefix preparation; per-game prefix selection implemented | Compatibility wrappers, reports and translations |
 
 See [Launcher](/guide/launcher/) for usage and [Roadmap](/project/roadmap/) for the remaining project work.
 
@@ -78,8 +82,8 @@ Historical design decisions, retained for context. Statements below about bundli
 and centralized saves are targets, not claims that these features are implemented. The implementation status above
 takes precedence. The launcher now lives in the `Tux-Force/xTux` repository.
 
-1. **Name:** product name **xTux Launcher**, Flatpak app id `io.github.TuxForce.xTux`. Repository name still to
-   pick (proposal: `Tux-Force/xtux-launcher`).
+1. **Name:** product name **xTux Launcher**, Flatpak app id `io.github.tux_force.xTux` (first proposed as
+   `io.github.TuxForce.xTux`; Flatpak ids follow the domain tux-force.github.io). The launcher lives in `Tux-Force/xTux`.
 2. **Naming:** the daemon becomes **xTux-service** (command and crate `xtux-service`), the CLI **xTux-cli** (command
    and crate `xtux-cli`); the renaming is part of M0.
 3. **One daemon, thin clients:** xTux-service is the single daemon. CLI and GUI are both thin clients on its
